@@ -1,0 +1,227 @@
+/* A calm reading page on warm paper. Sans throughout; serif only for the page and article titles. */
+:root {
+  --paper: #f8f4ea;
+  --ink: #1d1a16;
+  --grey: #6d675c;
+  --light: #a8a092;
+  --rule: #ded7c6;
+  --accent: #9b2d1f;
+  --green: #3d8533; /* the companion's macro green */
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "URW Palladio L", "P052", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
+  --app-sans: var(--sans);
+  color-scheme: light;
+}
+/* Themes: Auto follows the system; the theme menu sets data-theme on <html> to pin one. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --paper: #131110;
+    --ink: #ece7dc;
+    --grey: #a39c8f;
+    --light: #6f695f;
+    --rule: #2f2b26;
+    --accent: #e58f73;
+    --green: #8bcd7d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #131110;
+  --ink: #ece7dc;
+  --grey: #a39c8f;
+  --light: #6f695f;
+  --rule: #2f2b26;
+  --accent: #e58f73;
+  --green: #8bcd7d;
+  color-scheme: dark;
+}
+/* Sepia: deeper, warmer paper for long reading. */
+:root[data-theme="sepia"] {
+  --paper: #e9d8b4;
+  --ink: #36271a;
+  --grey: #6a553c;
+  --light: #9c8463;
+  --rule: #d3bd92;
+  --accent: #8e3b1e;
+  --green: #4a7a2c;
+  color-scheme: light;
+}
+/* Slate: a cool blue-grey dark. */
+:root[data-theme="slate"] {
+  --paper: #161b22;
+  --ink: #e2e8f0;
+  --grey: #9aa6b5;
+  --light: #5f6b7a;
+  --rule: #2a323d;
+  --accent: #7cb4f0;
+  --green: #7fcf9a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 15.5px/1.5 var(--app-sans);
+  font-variant-numeric: lining-nums;
+}
+.item, .item h3, .meta, .desc, .body, .body p, .body li, .body ul, .body ol, .filters, .font-picker, .back {
+  font-family: var(--app-sans);
+}
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--light); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.top, main, .foot { max-width: 44rem; margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem; }
+.wide .top, .wide main { max-width: 72rem; }
+main { padding-bottom: 3rem; }
+
+/* ---------- header ---------- */
+.top { padding-top: 2.4rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); }
+.top-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+.top h1 { margin: 0; font-family: var(--serif); font-size: 2.2rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; }
+.top h1 a:hover { text-decoration: none; }
+.top .updated { margin: 0.35rem 0 0; font-size: 0.8rem; color: var(--light); } /* phone page only */
+.top.slim { max-width: 40rem; padding-top: 1.4rem; padding-bottom: 0.7rem; }
+.wide .top.slim { max-width: 72rem; }
+.back { font-size: 0.9rem; color: var(--grey); }
+.back::before { content: "← "; }
+.tools, .pickers { display: flex; align-items: center; gap: 0.6rem 1.1rem; flex-wrap: wrap; }
+.tools > a { font-size: 0.85rem; color: var(--grey); }
+.tools > a:hover, .tools > a.on { color: var(--ink); }
+.font-picker { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.78rem; color: var(--grey); }
+.font-picker span { font-variant-caps: all-small-caps; letter-spacing: 0.08em; }
+.font-picker :is(#size-picker, #theme-picker) { min-width: 0; }
+.font-picker select {
+  min-width: 11rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--paper) 92%, var(--rule));
+  color: var(--ink);
+  font: inherit;
+}
+.filters { display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; margin-top: 0.7rem; font-size: 0.88rem; color: var(--grey); }
+.filters a.on { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+
+.cap {
+  margin: 2.4rem 0 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.12em;
+  color: var(--grey);
+}
+
+/* ---------- stories ---------- */
+.item { padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
+.item:last-child { border-bottom: 0; }
+.item h3 { margin: 0; font-size: 1.04rem; font-weight: 600; line-height: 1.35; }
+.meta { margin: 0.2rem 0 0; font-size: 0.82rem; color: var(--grey); }
+.flag { margin-right: 0.4em; font-size: 0.95rem; line-height: 1; vertical-align: -0.08em; font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; }
+.desc {
+  margin: 0.3rem 0 0;
+  font-size: 0.92rem;
+  color: var(--grey);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lead { margin-top: 1.4rem; }
+.lead-item { padding: 1.1rem 0; }
+.lead-item h3 { font-size: 1.32rem; line-height: 1.28; letter-spacing: -0.005em; }
+.item.full .desc { white-space: normal; overflow: visible; line-height: 1.5; }
+.lead-item .desc { white-space: normal; color: var(--ink); opacity: 0.85; font-size: 0.97rem; line-height: 1.55; margin-top: 0.4rem; }
+.lead-item .meta { margin-top: 0.3rem; }
+/* Every preview has the same small 3:2 picture at the right. */
+.item::after { content: ""; display: block; clear: both; }
+.thumb { float: right; margin: 0.15rem 0 0.2rem 1rem; }
+.thumb img { display: block; width: 6rem; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 3px; background: var(--rule); }
+.lead-image { margin: 0 0 1.6rem; }
+.lead-image img { display: block; width: 100%; max-height: 24rem; object-fit: cover; border-radius: 3px; background: var(--rule); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme]) :is(.thumb img, .lead-image img) { filter: brightness(0.88); } }
+:root:is([data-theme="dark"], [data-theme="slate"]) :is(.thumb img, .lead-image img) { filter: brightness(0.88); }
+.more { margin-top: 0.4rem; padding-top: 0.2rem; border-top: 2px solid var(--ink); }
+.more .item h3 { font-size: 0.98rem; }
+
+.empty { margin-top: 3rem; color: var(--grey); }
+
+/* ---------- reader ---------- */
+.reader { max-width: 40rem; padding-top: 2rem; }
+.title { margin: 0.4rem 0 0.6rem; font-family: var(--serif); font-size: 2.1rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+.byline { margin: 0 0 1.6rem; color: var(--grey); font-size: 0.92rem; line-height: 1.55; }
+.byline .name { margin-right: 0.3em; font-weight: 600; color: var(--ink); }
+.body { font-size: 1.08rem; line-height: 1.68; }
+.body p { margin: 0 0 1.05em; }
+.body h2 { margin: 1.8em 0 0.5em; font-size: 1.12rem; font-weight: 600; }
+.body ul, .body ol { padding-left: 1.3em; margin: 0 0 1.05em; }
+.body li { margin-bottom: 0.35em; }
+.body blockquote { margin: 0 0 1.05em; padding-left: 1em; border-left: 2px solid var(--rule); color: var(--grey); }
+.meta a.out { color: inherit; text-decoration: none; }
+/* Meta line: the source stands out; reading time, age and date are lighter, set apart by space, not slashes. */
+.meta .src { color: var(--ink); font-weight: 500; }
+.meta .len, .meta .age { color: var(--light); }
+/* Reading time is green until the story is ticked read or skipped. */
+[data-read]:not(.is-read):not(.is-skip) .meta .len { color: var(--green); }
+.meta .src + span, .meta .len + span, .meta .age + span, .meta span + a.original { margin-left: 0.9em; }
+.meta a.out:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.meta a.original { color: var(--accent); white-space: nowrap; }
+
+/* ---------- debug ---------- */
+.debug table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.debug th, .debug td { text-align: left; vertical-align: top; padding: 0.3rem 0.6rem 0.3rem 0; border-bottom: 1px solid var(--rule); }
+.debug th { font-weight: 600; color: var(--grey); }
+.debug td.url { word-break: break-all; color: var(--grey); }
+
+.foot { padding-bottom: 3rem; font-size: 0.8rem; color: var(--light); }
+
+@media (max-width: 34rem) {
+  .thumb img { width: 4.75rem; }
+  .thumb { margin-left: 0.8rem; }
+  .top h1 { font-size: 1.9rem; }
+  .title { font-size: 1.7rem; }
+  .lead-item h3 { font-size: 1.18rem; }
+  .debug { overflow-x: auto; }
+}
+
+/* ---------- ticks: a drawn box with three states (empty, read, skip), hung in the gutter left of the title ---------- */
+.item h3, .reader .title { position: relative; }
+button.read {
+  appearance: none; display: inline-grid; place-content: center; padding: 0;
+  position: absolute; left: -1.75rem; top: 0.5lh; transform: translateY(-50%);
+  font-size: inherit; line-height: inherit; /* so 1lh is the title's line */
+  width: 15px; height: 15px; margin: 0;
+  border: 1.5px solid var(--light); border-radius: 4px; background: transparent; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.reader .title button.read { width: 18px; height: 18px; left: -2.1rem; }
+button.read::after {
+  content: ""; width: 8px; height: 4.5px; border: solid var(--paper); border-width: 0 0 2px 2px;
+  transform: translateY(-1px) rotate(-45deg) scale(0); transition: transform 0.15s cubic-bezier(0.3, 1.6, 0.6, 1);
+}
+button.read:hover { border-color: var(--grey); box-shadow: 0 0 0 3px color-mix(in srgb, var(--grey) 20%, transparent); }
+button.read[data-state="read"] { background: var(--grey); border-color: var(--grey); }
+button.read[data-state="read"]::after { transform: translateY(-1px) rotate(-45deg) scale(1); }
+/* Skip: a dash. */
+button.read[data-state="skip"]::after { width: 7px; height: 0; border-width: 0 0 2px 0; border-color: var(--grey); transform: none; }
+.item.is-read h3 a, .item.is-read .desc { color: var(--light); }
+.item.is-read .thumb img { opacity: 0.45; }
+.read-list .item.is-read h3 a { color: inherit; } /* everything on the Read page is read; no need to dim it */
+/* Skipped: title and source line only, smaller. */
+.item.is-skip { padding: 0.45rem 0; }
+.item.is-skip .thumb, .item.is-skip .desc { display: none; }
+.item.is-skip h3, .lead-item.is-skip h3 { font-size: 0.92rem; font-weight: 500; line-height: 1.35; }
+.item.is-skip h3 a { color: var(--light); }
+.item.is-skip .meta { font-size: 0.76rem; }
+/* No gutter on narrow screens: the box sits before the title instead. */
+@media (max-width: 49rem) {
+  button.read, .reader .title button.read { position: static; transform: none; margin: 0 0.5em 0 0; vertical-align: 0.05em; }
+  .reader .title button.read { vertical-align: 0.15em; }
+}
+
+/* Article pages: drag-to-scroll in the margins (see DRAG_SCRIPT). An open hand shows where a drag will scroll. */
+html.drag-zone, html.drag-zone body { cursor: grab; }
+html.dragging, html.dragging * { cursor: grabbing !important; user-select: none; }
